@@ -1,0 +1,95 @@
+.wrapper__card {
+  display: flex;
+  gap: 16px;
+  font-family: Inter;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.card__image {
+  border-radius: 50px;
+  width: 72px;
+  height: 72px;
+}
+
+.information {
+  display: flex;
+}
+
+.information__FIO {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  margin: 0;
+}
+
+.information__meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  color: #97979b;
+}
+
+.card__depatrment {
+  margin: 0;
+  color: #55555c;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 123.077% */
+}
+
+.card__bithday {
+  color: #55555c;
+  text-align: right;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  margin-left: auto;
+}
+
+.card__devider {
+  position: relative;
+  width: 160px;
+  margin: 24px auto;
+  text-align: center;
+  color: #c3c3c6;
+  text-align: center;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.card__devider::before,
+.card__devider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 36vw;
+  height: 1px;
+  background-color: #c3c3c6;
+}
+
+.card__devider::before {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.card__devider::after {
+  right: 0;
+  transform: translateX(100%);
+}

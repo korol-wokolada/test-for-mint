@@ -1,0 +1,44 @@
+.wrapper__error {
+  max-width: 343px;
+  position: absolute;
+  top: calc(50% - 75px);
+  left: calc(50% - 161.5px);
+  text-align: center;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-style: normal;
+}
+
+.error__icon {
+  width: 56px;
+  height: 56px;
+  background-image: url(../../assets/icons/flying-saucer.svg);
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
+
+.error__caption--black {
+  color: #050510;
+
+  font-size: 17px;
+
+  font-weight: 600;
+  line-height: 22px;
+  margin: 8px;
+}
+
+.error__caption--grey {
+  color: #97979b;
+  margin: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.error__link--refresh {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  color: #6534ff;
+}

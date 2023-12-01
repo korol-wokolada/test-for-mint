@@ -1,0 +1,25 @@
+.header__list {
+  display: flex;
+  justify-content: left;
+  margin: 14px 0 0 0;
+  padding-left: 16px;
+  padding-bottom: 8px;
+  border-bottom: 0.4px solid #c3c3c6;
+  width: calc(100% - 16px);
+}
+
+.list__link {
+  font-family: Inter;
+  font-feature-settings: "clig" off, "liga" off;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  color: #97979b;
+  padding: 8px 12px;
+}
+
+.list__link.active {
+  color: black;
+  border-bottom: 2px solid #6534ff;
+}

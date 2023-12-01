@@ -1,24 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./components/header/Header";
+import AppRoutes from "./routes/AppRoutes";
+import { useLocation } from "react-router";
 
 function App() {
+  const location = useLocation();
+
+  const regex: RegExp = /497f6eca-6276-4993-bfeb-[a-zA-Z0-9]+/;
+
+  const shouldShowHeader = regex.test(location.pathname);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {shouldShowHeader ? null : <Header />}
+      <AppRoutes />
     </div>
   );
 }

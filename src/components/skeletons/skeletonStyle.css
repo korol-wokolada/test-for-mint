@@ -1,0 +1,58 @@
+.skeleton-wrapper__card {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  align-items: baseline;
+}
+
+.skeleton-card__avatar,
+.skeleton-information__FIO,
+.skeleton-card__depatrment {
+  position: relative;
+  border-radius: 50px;
+  overflow: hidden;
+  background: linear-gradient(90deg, #f3f3f6 0%, #fafafa 100%);
+}
+
+.skeleton-card__avatar::before,
+.skeleton-information__FIO::before,
+.skeleton-card__depatrment::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  border-radius: inherit;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    #e8e8e8 50%,
+    transparent 100%
+  );
+  animation: shimmerAnimation 2s infinite;
+}
+
+.skeleton-card__avatar {
+  width: 72px;
+  height: 72px;
+}
+
+.skeleton-information__FIO {
+  width: 144px;
+  height: 16px;
+}
+
+.skeleton-card__depatrment {
+  width: 80px;
+  height: 12px;
+}
+
+@keyframes shimmerAnimation {
+  0% {
+    transform: translateX(-150%);
+  }
+  100% {
+    transform: translateX(90%);
+  }
+}
