@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllWorkers } from "./thunk";
 import { ResponseDataType } from "../../api/types";
 
 const allWorkersSlice = createSlice({
@@ -7,25 +6,21 @@ const allWorkersSlice = createSlice({
   initialState: {
     workers: { items: [] } as ResponseDataType,
     status: "idle", // idle, pending, fulfilled, rejected
-    error: undefined as string | undefined,
+    error: null as string | null,
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchAllWorkers.pending, (state) => {
-        state.status = "pending";
-      })
-      .addCase(fetchAllWorkers.fulfilled, (state, action) => {
-        state.status = "fulfilled";
-        state.workers = action.payload;
-      })
-      .addCase(fetchAllWorkers.rejected, (state, action) => {
-        state.status = "rejected";
-        state.error = action.error.message;
-      });
+  reducers: {
+    setWorkersData: (state, action) => {
+      state.workers = action.payload;
+      state.status = "fulfilled";
+      state.error = null;
+    },
+    setWorkersError: (state, action) => {
+      state.status = "rejected";
+      state.error = action.payload;
+    },
   },
 });
 
 export default allWorkersSlice.reducer;
-export const {} = allWorkersSlice.actions;
+export const { setWorkersData, setWorkersError } = allWorkersSlice.actions;
 export type allWorkersType = typeof allWorkersSlice.getInitialState;

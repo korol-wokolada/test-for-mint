@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAnalysts } from "./thunk";
+
 import { ResponseDataType } from "../../api/types";
 
 const analystsWorkersSlice = createSlice({
@@ -7,24 +7,21 @@ const analystsWorkersSlice = createSlice({
   initialState: {
     workers: { items: [] } as ResponseDataType,
     status: "idle", // idle, pending, fulfilled, rejected
-    error: undefined as string | undefined,
+    error: null as string | null,
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchAnalysts.pending, (state) => {
-        state.status = "pending";
-      })
-      .addCase(fetchAnalysts.fulfilled, (state, action) => {
-        state.status = "fulfilled";
-        state.workers = action.payload;
-      })
-      .addCase(fetchAnalysts.rejected, (state, action) => {
-        state.status = "rejected";
-        state.error = action.error.message;
-      });
+  reducers: {
+    setAnalystsWorkersData: (state, action) => {
+      state.workers = action.payload;
+      state.status = "fulfilled";
+      state.error = null;
+    },
+    setAnalystsWorkersError: (state, action) => {
+      state.status = "rejected";
+      state.error = action.payload;
+    },
   },
 });
 
 export default analystsWorkersSlice.reducer;
-export const {} = analystsWorkersSlice.actions;
+export const { setAnalystsWorkersData, setAnalystsWorkersError } =
+  analystsWorkersSlice.actions;

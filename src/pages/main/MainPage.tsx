@@ -1,22 +1,23 @@
-import { fetchAllWorkers } from "../../redux/allWorkers/thunk";
 import CriticalError from "../../components/criticalError/CriticalError";
 import CardWrapper from "../../components/cardWrapper/CardWrapper";
 import SceletonWrapperCard from "../../components/skeletons/SceletonCard";
 import NotFoundWorker from "../../components/notFoundWorker/NotFoundWorker";
-import useWorkersData from "../../customHooks/useWorkersDataHook";
+import { useDataWorkers } from "../../customHooks/useDataWorkers";
+import { fetchAllWorker } from "../../api/apiAllWorkers";
+import { setWorkersData, setWorkersError } from "../../redux/allWorkers/slice";
 
 export default function MainPage() {
   const {
-    currentPath,
+    handleRetry,
     error,
     sortType,
     showSkeleton,
     showNotFound,
     workersArray,
-  } = useWorkersData((state) => state.allWorkers, fetchAllWorkers);
+  } = useDataWorkers(fetchAllWorker, setWorkersError, setWorkersData);
 
   if (error) {
-    return <CriticalError pageName={currentPath} />;
+    return <CriticalError handleRetry={handleRetry} />;
   }
 
   return (

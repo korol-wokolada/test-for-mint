@@ -1,22 +1,30 @@
 import CriticalError from "../../components/criticalError/CriticalError";
 import SceletonWrapperCard from "../../components/skeletons/SceletonCard";
-import { fetchDesigners } from "../../redux/designerWorkers/thunk";
 import CardWrapper from "../../components/cardWrapper/CardWrapper";
 import NotFoundWorker from "../../components/notFoundWorker/NotFoundWorker";
-import useWorkersData from "../../customHooks/useWorkersDataHook";
+import { useDataWorkers } from "../../customHooks/useDataWorkers";
+import { fetchDesigners } from "../../api/apiDesigners";
+import {
+  setDesignersWorkersData,
+  setDesignersWorkersError,
+} from "../../redux/designerWorkers/slice";
 
 export default function DesignersPage() {
   const {
-    currentPath,
     error,
     sortType,
     showSkeleton,
     showNotFound,
     workersArray,
-  } = useWorkersData((state) => state.designers, fetchDesigners);
+    handleRetry,
+  } = useDataWorkers(
+    fetchDesigners,
+    setDesignersWorkersError,
+    setDesignersWorkersData
+  );
 
   if (error) {
-    return <CriticalError pageName={currentPath} />;
+    return <CriticalError handleRetry={handleRetry} />;
   }
 
   return (

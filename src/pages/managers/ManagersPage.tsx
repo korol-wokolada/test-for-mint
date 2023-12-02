@@ -1,24 +1,31 @@
 import CriticalError from "../../components/criticalError/CriticalError";
 import SceletonWrapperCard from "../../components/skeletons/SceletonCard";
-import { fetchManagers } from "../../redux/managerWorkers/thunk";
 import CardWrapper from "../../components/cardWrapper/CardWrapper";
 import NotFoundWorker from "../../components/notFoundWorker/NotFoundWorker";
-import useWorkersData from "../../customHooks/useWorkersDataHook";
+import { useDataWorkers } from "../../customHooks/useDataWorkers";
+import { fetchManagers } from "../../api/apiManagers";
+import {
+  setManagersWorkersData,
+  setManagersWorkersErrors,
+} from "../../redux/managerWorkers/slice";
 
 export default function ManagersPage() {
   const {
-    currentPath,
+    handleRetry,
     error,
     sortType,
     showSkeleton,
     showNotFound,
     workersArray,
-  } = useWorkersData((state) => state.managers, fetchManagers);
+  } = useDataWorkers(
+    fetchManagers,
+    setManagersWorkersErrors,
+    setManagersWorkersData
+  );
 
   if (error) {
-    return <CriticalError pageName={currentPath} />;
+    return <CriticalError handleRetry={handleRetry} />;
   }
-
   return (
     <main>
       {showSkeleton && <SceletonWrapperCard />}

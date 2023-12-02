@@ -1,7 +1,10 @@
-import "./App.css";
+import "./style.css";
 import Header from "./components/header/Header";
 import AppRoutes from "./routes/AppRoutes";
 import { useLocation } from "react-router";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   const location = useLocation();
@@ -11,10 +14,12 @@ function App() {
   const shouldShowHeader = regex.test(location.pathname);
 
   return (
-    <div className="app">
-      {shouldShowHeader ? null : <Header />}
-      <AppRoutes />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="app">
+        {shouldShowHeader ? null : <Header />}
+        <AppRoutes />
+      </div>
+    </QueryClientProvider>
   );
 }
 

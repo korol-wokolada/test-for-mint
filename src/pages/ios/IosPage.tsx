@@ -1,22 +1,26 @@
 import CriticalError from "../../components/criticalError/CriticalError";
 import SceletonWrapperCard from "../../components/skeletons/SceletonCard";
-import { fetchIosWorkers } from "../../redux/iosWorkers/thunk";
 import CardWrapper from "../../components/cardWrapper/CardWrapper";
 import NotFoundWorker from "../../components/notFoundWorker/NotFoundWorker";
-import useWorkersData from "../../customHooks/useWorkersDataHook";
+import { useDataWorkers } from "../../customHooks/useDataWorkers";
+import { fetchIosWorkers } from "../../api/apiIosWorkers";
+import {
+  setIosWorkersData,
+  setIosWorkersError,
+} from "../../redux/iosWorkers/slice";
 
 export default function IosPage() {
   const {
-    currentPath,
+    handleRetry,
     error,
     sortType,
     showSkeleton,
     showNotFound,
     workersArray,
-  } = useWorkersData((state) => state.ios, fetchIosWorkers);
+  } = useDataWorkers(fetchIosWorkers, setIosWorkersError, setIosWorkersData);
 
   if (error) {
-    return <CriticalError pageName={currentPath} />;
+    return <CriticalError handleRetry={handleRetry} />;
   }
 
   return (

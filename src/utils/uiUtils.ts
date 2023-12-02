@@ -1,4 +1,4 @@
-import { DataType, ResponseDataType } from "../api/types";
+import { DataType } from "../api/types";
 
 export const alphabetSortWorkers = (items: DataType[]): DataType[] => {
   const sortedItems = [...items];

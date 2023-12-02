@@ -1,32 +1,43 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./style.css";
 import avatar from "../../assets/icons/plug-goose.svg";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch } from "../../redux/store";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   calculateAge,
   formatBirthday,
   formatPhoneNumber,
 } from "../../utils/uiUtils";
-import { fetchAllWorkers } from "../../redux/allWorkers/thunk";
 import Loader from "../../components/loader/Loader";
-import NotFoundWorker from "../../components/notFoundWorker/NotFoundWorker";
 import CriticalError from "../../components/criticalError/CriticalError";
+import { useQuery } from "react-query";
+import { ResponseDataType } from "../../api/types";
+import { setWorkersData, setWorkersError } from "../../redux/allWorkers/slice";
+import { fetchAllWorker } from "../../api/apiAllWorkers";
 
 export default function ProfilePage() {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { workers, error, status } = useAppSelector(
-    (state) => state.allWorkers
-  );
+  const queryKey = ["workers", location];
+
+  const {
+    data: workers,
+    error,
+    status,
+  } = useQuery<ResponseDataType, Error>(queryKey, fetchAllWorker, {
+    staleTime: 5 * 60 * 1000, // 5 минут в миллисекундах
+    onError: (error) => {
+      dispatch(setWorkersError(error.message));
+    },
+  });
 
   useEffect(() => {
-    if (!workers.items.length) {
-      dispatch(fetchAllWorkers());
+    if (status === "success") {
+      dispatch(setWorkersData(workers));
     }
-  });
+  }, [status, workers, dispatch]);
 
   if (error) {
     return <CriticalError pageName="/" />;
@@ -40,7 +51,7 @@ export default function ProfilePage() {
     department,
     birthday,
     phone,
-  } = workers.items.find(({ id }) => id === location.pathname.slice(1)) || {};
+  } = workers?.items.find(({ id }) => id === location.pathname.slice(1)) || {};
 
   const age = birthday ? calculateAge(birthday) : "";
   const correctBirthdayData = birthday ? formatBirthday(birthday) : "";
@@ -56,7 +67,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      {status === "pending" ? (
+      {status === "loading" ? (
         <Loader />
       ) : (
         <main className="wrapper__profile">

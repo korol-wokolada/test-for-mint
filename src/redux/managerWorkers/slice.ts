@@ -1,30 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ResponseDataType } from "../../api/types";
-import { fetchManagers } from "./thunk";
 
 const managerWorkersSlice = createSlice({
   name: "managers",
   initialState: {
     workers: { items: [] } as ResponseDataType,
     status: "idle", // idle, pending, fulfilled, rejected
-    error: undefined as string | undefined,
+    error: null as string | null,
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchManagers.pending, (state) => {
-        state.status = "pending";
-      })
-      .addCase(fetchManagers.fulfilled, (state, action) => {
-        state.status = "fulfilled";
-        state.workers = action.payload;
-      })
-      .addCase(fetchManagers.rejected, (state, action) => {
-        state.status = "rejected";
-        state.error = action.error.message;
-      });
+  reducers: {
+    setManagersWorkersData: (state, action) => {
+      state.workers = action.payload;
+      state.status = "fulfilled";
+      state.error = null;
+    },
+    setManagersWorkersErrors: (state, action) => {
+      state.status = "rejected";
+      state.error = action.payload;
+    },
   },
 });
 
 export default managerWorkersSlice.reducer;
-export const {} = managerWorkersSlice.actions;
+export const { setManagersWorkersData, setManagersWorkersErrors } =
+  managerWorkersSlice.actions;

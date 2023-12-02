@@ -1,22 +1,30 @@
 import CriticalError from "../../components/criticalError/CriticalError";
 import SceletonWrapperCard from "../../components/skeletons/SceletonCard";
-import { fetchAndroidWorkers } from "../../redux/androidWorkers/thunk";
 import CardWrapper from "../../components/cardWrapper/CardWrapper";
 import NotFoundWorker from "../../components/notFoundWorker/NotFoundWorker";
-import useWorkersData from "../../customHooks/useWorkersDataHook";
+import { useDataWorkers } from "../../customHooks/useDataWorkers";
+import { fetchAndroidWorkers } from "../../api/apiAndroidWorkers";
+import {
+  setAndroidWorkersData,
+  setAndroidWorkersError,
+} from "../../redux/androidWorkers/slice";
 
 export default function AndriodPage() {
   const {
-    currentPath,
     error,
     sortType,
     showSkeleton,
     showNotFound,
     workersArray,
-  } = useWorkersData((state) => state.android, fetchAndroidWorkers);
+    handleRetry,
+  } = useDataWorkers(
+    fetchAndroidWorkers,
+    setAndroidWorkersError,
+    setAndroidWorkersData
+  );
 
   if (error) {
-    return <CriticalError pageName={currentPath} />;
+    return <CriticalError handleRetry={handleRetry} />;
   }
 
   return (

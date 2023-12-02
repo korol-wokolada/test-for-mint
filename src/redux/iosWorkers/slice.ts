@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchIosWorkers } from "./thunk";
+
 import { ResponseDataType } from "../../api/types";
 
 const iosWorkersSlice = createSlice({
@@ -7,24 +7,21 @@ const iosWorkersSlice = createSlice({
   initialState: {
     workers: { items: [] } as ResponseDataType,
     status: "idle", // idle, pending, fulfilled, rejected
-    error: undefined as undefined | string,
+    error: null as null | string,
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchIosWorkers.pending, (state) => {
-        state.status = "pending";
-      })
-      .addCase(fetchIosWorkers.fulfilled, (state, action) => {
-        state.status = "fulfilled";
-        state.workers = action.payload;
-      })
-      .addCase(fetchIosWorkers.rejected, (state, action) => {
-        state.status = "rejected";
-        state.error = action.error.message;
-      });
+  reducers: {
+    setIosWorkersData: (state, action) => {
+      state.workers = action.payload;
+      state.status = "fulfilled";
+      state.error = null;
+    },
+    setIosWorkersError: (state, action) => {
+      state.status = "rejected";
+      state.error = action.payload;
+    },
   },
 });
 
 export default iosWorkersSlice.reducer;
-export const {} = iosWorkersSlice.actions;
+export const { setIosWorkersData, setIosWorkersError } =
+  iosWorkersSlice.actions;
