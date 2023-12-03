@@ -1,7 +1,8 @@
 .header {
   max-width: 1280px;
-
+  font-feature-settings: "clig" off, "liga" off;
   font-family: Inter;
+  padding: 8px 24px;
 }
 
 .header__caption {
@@ -9,5 +10,22 @@
   font-style: normal;
   font-weight: 700;
   line-height: 28px;
-  margin: 8px 24px;
+  margin-bottom: 8px;
+}
+
+.header-offline {
+  background-color: #f44336;
+  color: white;
+}
+
+.header__text {
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+.header-loading {
+  background-color: #6534ff;
+  color: white;
 }

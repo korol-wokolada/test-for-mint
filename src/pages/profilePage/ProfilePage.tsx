@@ -20,7 +20,7 @@ export default function ProfilePage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const queryKey = ["workers", location];
+  const queryKey = ["workers", "/"];
 
   const {
     data: workers,

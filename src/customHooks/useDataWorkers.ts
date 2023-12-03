@@ -27,6 +27,10 @@ export function useDataWorkers(
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const { findWorkersValue, sortType } = useAppSelector(
+    (state) => state.application
+  );
+
   const queryKey = ["workers", currentPath];
 
   const [isQueryEnabled, setQueryEnabled] = useState(true);
@@ -42,12 +46,7 @@ export function useDataWorkers(
     onError: (error) => {
       dispatch(actionError(error.message));
     },
-    refetchOnWindowFocus: false,
   });
-
-  const { findWorkersValue, sortType } = useAppSelector(
-    (state) => state.application
-  );
 
   useEffect(() => {
     if (status === "success") {
